@@ -17,59 +17,122 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("MAIN MENU"),
-              SizedBox(height: 50),
+              const Text("MAIN MENU"),
+              const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Check Balance"),
+                  InkWell(
+                    onTap: () {},
+                    child: const Card(
+                      elevation: 20,
+                      child: SizedBox(
+                        height: 70, // Specify height here
+                        width: 150,
+                        child: Center(
+                          child: Text('Check Balance'),
+                        ),
+                      ),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Withdraw Cash"),
-                  )
+                  InkWell(
+                    onTap: () {},
+                    child: const Card(
+                      elevation: 20,
+                      child: SizedBox(
+                        height: 70, // Specify height here
+                        width: 150,
+                        child: Center(
+                          child: Text('Widthraw Money'),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Deposit Money"),
+                  InkWell(
+                    onTap: () {},
+                    child: const Card(
+                      elevation: 20,
+                      child: SizedBox(
+                        height: 70, // Specify height here
+                        width: 150,
+                        child: Center(
+                          child: Text('Deposit Money'),
+                        ),
+                      ),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Transfer Money"),
-                  )
+                  InkWell(
+                    onTap: () {},
+                    child: const Card(
+                      elevation: 20,
+                      child: SizedBox(
+                        height: 70, // Specify height here
+                        width: 150,
+                        child: Center(
+                          child: Text('Transfer Money'),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Pay Bills"),
+                  InkWell(
+                    onTap: () {},
+                    child: const Card(
+                      elevation: 20,
+                      child: SizedBox(
+                        height: 70, // Specify height here
+                        width: 150,
+                        child: Center(
+                          child: Text('Pay Bills'),
+                        ),
+                      ),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Change PIN"),
-                  )
+                  InkWell(
+                    onTap: () {},
+                    child: const Card(
+                      elevation: 20,
+                      child: SizedBox(
+                        height: 70, // Specify height here
+                        width: 150,
+                        child: Center(
+                          child: Text('Change PIN'),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Exit"),
+                  InkWell(
+                    onTap: () {},
+                    child: const Card(
+                      elevation: 20,
+                      child: SizedBox(
+                        height: 70, // Specify height here
+                        width: 150,
+                        child: Center(
+                          child: Text('Exit'),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

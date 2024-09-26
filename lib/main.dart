@@ -7,46 +7,21 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ATM Application',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Log In'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -58,7 +33,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+      backgroundColor: const Color.fromRGBO(232, 230, 226, 1),
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(1, 109, 47, 1),
+        title: const Text(
+          'ATM APPLICATION',
+          style: TextStyle(color: Colors.white), // Set title color to white
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
@@ -71,47 +54,67 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 100,
               ),
               const SizedBox(height: 50),
-              Form(
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'PIN',
-                          labelStyle: TextStyle(color: Colors.black)),
-                      style: const TextStyle(color: Colors.black),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
+
+              // Section title "Log In" at the top
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Log In",
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Color.fromRGBO(32, 32, 32, 1),
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
+
+              // PIN input field with white background
+              TextFormField(
+                obscureText: true,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  labelText: 'PIN',
+                  labelStyle: TextStyle(color: Colors.black),
+                ),
+                style: const TextStyle(color: Colors.black),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your PIN';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 30), // Space between input field and button
+
+              // Log In button (rounded and taller)
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Log In logic here
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[800],
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  backgroundColor: const Color.fromRGBO(1, 109, 47, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 18),
                 ),
                 child: const Text(
                   'Log In',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 20), // Space between Log In and Forgot PIN button
+
+              // Forgot PIN button
               TextButton(
                 onPressed: () {
-                  // Add 'Forgot Password' functionality here
+                  // Add 'Forgot PIN' functionality here
                 },
-                child: Text(
+                child: const Text(
                   'Forgot PIN?',
-                  style: TextStyle(color: Colors.blue[800]),
+                  style: TextStyle(color:  Color.fromRGBO(1, 109, 47, 1)),
                 ),
               ),
               const SizedBox(height: 20),

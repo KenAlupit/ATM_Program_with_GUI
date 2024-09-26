@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Pay Bills'),
+          title: const Text('Change PIN'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -18,15 +20,11 @@ class MyApp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text("Your Available Balance is: 1000000000"),
-                const SizedBox(
-                  height: 75,
-                ),
                 TextFormField(
                   obscureText: true,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Enter name of biller',
+                      labelText: 'Enter Current PIN',
                       labelStyle: TextStyle(color: Colors.black)),
                   style: const TextStyle(color: Colors.black),
                 ),
@@ -37,14 +35,14 @@ class MyApp extends StatelessWidget {
                   obscureText: true,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Enter amount you wish to pay',
+                      labelText: 'Enter New PIN',
                       labelStyle: TextStyle(color: Colors.black)),
                   style: const TextStyle(color: Colors.black),
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                ElevatedButton(onPressed: () {}, child: const Text("Pay")),
+                ElevatedButton(onPressed: () {}, child: const Text("Change")),
                 const SizedBox(
                   height: 30,
                 ),

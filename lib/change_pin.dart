@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menu.dart';
 
@@ -92,15 +91,6 @@ class _ChangePINState extends State<ChangePIN> {
       },
     );
   }
-=======
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
->>>>>>> layout-design
 
   @override
   Widget build(BuildContext context) {
@@ -111,12 +101,8 @@ class MyApp extends StatelessWidget {
 
         // AppBar displaying "ATM APPLICATION"
         appBar: AppBar(
-<<<<<<< HEAD
           backgroundColor:
               const Color.fromRGBO(1, 109, 47, 1), // Green background color
-=======
-          backgroundColor: const Color.fromRGBO(1, 109, 47, 1), // Green background color
->>>>>>> layout-design
           foregroundColor: Colors.white,
           elevation: 4,
           title: const Text('ATM APPLICATION'), // Retained title
@@ -164,18 +150,14 @@ class MyApp extends StatelessWidget {
 
               // Current PIN input field with white background
               TextFormField(
-<<<<<<< HEAD
                 controller: _oldPinController,
                 keyboardType: TextInputType.number,
-=======
->>>>>>> layout-design
                 obscureText: true,
                 decoration: const InputDecoration(
                   filled: true, // White background
                   fillColor: Colors.white,
                   border: const OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-<<<<<<< HEAD
                     borderSide: const BorderSide(
                         color: Color.fromRGBO(1, 109, 47, 1),
                         width: 2), // Green border when focused
@@ -184,12 +166,6 @@ class MyApp extends StatelessWidget {
                     borderSide: const BorderSide(
                         color: Color.fromRGBO(1, 109, 47, 1),
                         width: 1), // Green border when enabled
-=======
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
->>>>>>> layout-design
                   ),
                   labelText: 'Enter Current PIN',
                   labelStyle: TextStyle(color: Colors.black),
@@ -202,18 +178,14 @@ class MyApp extends StatelessWidget {
 
               // New PIN input field with white background
               TextFormField(
-<<<<<<< HEAD
                 controller: _newPinController,
                 keyboardType: TextInputType.number,
-=======
->>>>>>> layout-design
                 obscureText: true,
                 decoration: const InputDecoration(
                   filled: true, // White background
                   fillColor: Colors.white,
                   border: const OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-<<<<<<< HEAD
                     borderSide: const BorderSide(
                         color: Color.fromRGBO(1, 109, 47, 1),
                         width: 2), // Green border when focused
@@ -222,12 +194,6 @@ class MyApp extends StatelessWidget {
                     borderSide: const BorderSide(
                         color: Color.fromRGBO(1, 109, 47, 1),
                         width: 1), // Green border when enabled
-=======
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
->>>>>>> layout-design
                   ),
                   labelText: 'Enter New PIN',
                   labelStyle: TextStyle(color: Colors.black),
@@ -241,7 +207,6 @@ class MyApp extends StatelessWidget {
               // Change PIN button (rounded and taller)
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-<<<<<<< HEAD
                   backgroundColor:
                       const Color.fromRGBO(1, 109, 47, 1), // Green color
                   shape: RoundedRectangleBorder(
@@ -252,17 +217,6 @@ class MyApp extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 18), // Taller height
                 ),
                 onPressed: _changePin,
-=======
-                  backgroundColor: const Color.fromRGBO(1, 109, 47, 1), // Green color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Rounded rectangle shape
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
-                ),
-                onPressed: () {
-                  // Change PIN logic here
-                },
->>>>>>> layout-design
                 child: const Text(
                   "Change",
                   style: TextStyle(color: Colors.white), // White text
@@ -275,7 +229,6 @@ class MyApp extends StatelessWidget {
               // Back button (rounded and taller)
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-<<<<<<< HEAD
                   backgroundColor:
                       const Color.fromARGB(255, 255, 255, 255), // White color
                   shape: RoundedRectangleBorder(
@@ -290,15 +243,6 @@ class MyApp extends StatelessWidget {
                     context,
                     MaterialPageRoute(builder: (context) => const MainMenu()),
                   );
-=======
-                  backgroundColor: const Color.fromARGB(255, 255, 255, 255), // White color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Rounded rectangle shape
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
-                ),
-                onPressed: () {
->>>>>>> layout-design
                   // Back button logic here
                 },
                 child: const Text(

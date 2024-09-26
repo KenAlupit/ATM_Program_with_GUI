@@ -32,8 +32,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
   int _counter = 0;
 
   void _incrementCounter() {
@@ -47,7 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-=======
   TextEditingController _pinController = TextEditingController();
   String _currentPIN = '1234';
 
@@ -105,9 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
->>>>>>> Stashed changes
-=======
->>>>>>> layout-design
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,38 +114,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         centerTitle: true,
       ),
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-=======
-=======
->>>>>>> layout-design
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
@@ -180,11 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
               // PIN input field with white background
               TextFormField(
-<<<<<<< HEAD
                 controller: _pinController,
                 keyboardType: TextInputType.number,
-=======
->>>>>>> layout-design
                 obscureText: true,
                 decoration: const InputDecoration(
                   filled: true,
@@ -201,22 +160,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   return null;
                 },
               ),
-<<<<<<< HEAD
               const SizedBox(
                   height: 30), // Space between input field and button
 
               // Log In button (rounded and taller)
               ElevatedButton(
                 onPressed: _login,
-=======
-              const SizedBox(height: 30), // Space between input field and button
-
-              // Log In button (rounded and taller)
-              ElevatedButton(
-                onPressed: () {
-                  // Log In logic here
-                },
->>>>>>> layout-design
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(1, 109, 47, 1),
                   shape: RoundedRectangleBorder(
@@ -229,12 +178,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
-<<<<<<< HEAD
               const SizedBox(
                   height: 20), // Space between Log In and Forgot PIN button
-=======
-              const SizedBox(height: 20), // Space between Log In and Forgot PIN button
->>>>>>> layout-design
 
               // Forgot PIN button
               TextButton(
@@ -243,11 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 child: const Text(
                   'Forgot PIN?',
-<<<<<<< HEAD
                   style: TextStyle(color: Color.fromRGBO(1, 109, 47, 1)),
-=======
-                  style: TextStyle(color:  Color.fromRGBO(1, 109, 47, 1)),
->>>>>>> layout-design
                 ),
               ),
               const SizedBox(height: 20),
@@ -255,10 +196,6 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 20),
             ],
           ),
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> layout-design
         ),
       ),
     );

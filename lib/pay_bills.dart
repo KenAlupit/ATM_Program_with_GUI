@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
 
         // AppBar displaying "ATM APPLICATION"
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(1, 109, 47, 1), // Green background color
+          backgroundColor:
+              const Color.fromRGBO(1, 109, 47, 1), // Green background color
           foregroundColor: Colors.white,
           elevation: 4,
           title: const Text('ATM APPLICATION'), // Changed title
@@ -65,7 +66,8 @@ class MyApp extends StatelessWidget {
               // Displaying available balance
               const Text(
                 "Your Available Balance is: 1000000000",
-                style: TextStyle(fontSize: 18, color: Color.fromRGBO(32, 32, 32, 1)),
+                style: TextStyle(
+                    fontSize: 18, color: Color.fromRGBO(32, 32, 32, 1)),
               ),
               const SizedBox(height: 75), // Added space below the balance
 
@@ -77,10 +79,14 @@ class MyApp extends StatelessWidget {
                   fillColor: Colors.white,
                   border: const OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(1, 109, 47, 1),
+                        width: 2), // Green border when focused
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(1, 109, 47, 1),
+                        width: 1), // Green border when enabled
                   ),
                   labelText: 'Enter Biller Name',
                   labelStyle: const TextStyle(color: Colors.black),
@@ -97,10 +103,14 @@ class MyApp extends StatelessWidget {
                   fillColor: Colors.white,
                   border: const OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(1, 109, 47, 1),
+                        width: 2), // Green border when focused
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(1, 109, 47, 1),
+                        width: 1), // Green border when enabled
                   ),
                   labelText: 'Enter Amount to Pay',
                   labelStyle: const TextStyle(color: Colors.black),
@@ -112,11 +122,14 @@ class MyApp extends StatelessWidget {
               // Pay button (rounded and styled)
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(1, 109, 47, 1), // Green color
+                  backgroundColor:
+                      const Color.fromRGBO(1, 109, 47, 1), // Green color
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Rounded rectangle shape
+                    borderRadius:
+                        BorderRadius.circular(10), // Rounded rectangle shape
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 18), // Taller height
                 ),
                 onPressed: () {
                   // Pay logic here
@@ -131,11 +144,14 @@ class MyApp extends StatelessWidget {
               // Back button (rounded and styled)
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 255, 255, 255), // White color
+                  backgroundColor:
+                      const Color.fromARGB(255, 255, 255, 255), // White color
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Rounded rectangle shape
+                    borderRadius:
+                        BorderRadius.circular(10), // Rounded rectangle shape
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 18), // Taller height
                 ),
                 onPressed: () {
                   // Back button logic here

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'change_pin.dart';
 import 'main.dart';
 
@@ -8,6 +9,15 @@ void main() {
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
+=======
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+>>>>>>> layout-design
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +82,7 @@ class MainMenu extends StatelessWidget {
                       height: 80,
                       width: double.infinity,
                       child: Row(
+<<<<<<< HEAD
                         mainAxisAlignment:
                             MainAxisAlignment.center, // Center the Row
                         children: [
@@ -80,6 +91,13 @@ class MainMenu extends StatelessWidget {
                                   1, 109, 47, 1)), // Icon for Check Balance
                           SizedBox(width: 10), // Space between icon and text
                           Text(
+=======
+                        mainAxisAlignment: MainAxisAlignment.center, // Center the Row
+                        children: [
+                           Icon(Icons.account_balance, color: Color.fromRGBO(1, 109, 47, 1)), // Icon for Check Balance
+                           SizedBox(width: 10), // Space between icon and text
+                           Text(
+>>>>>>> layout-design
                             'Check Balance',
                             style: TextStyle(
                               fontSize: 18,
@@ -105,6 +123,7 @@ class MainMenu extends StatelessWidget {
                       height: 80,
                       width: double.infinity,
                       child: Row(
+<<<<<<< HEAD
                         mainAxisAlignment:
                             MainAxisAlignment.center, // Center the Row
                         children: [
@@ -113,6 +132,13 @@ class MainMenu extends StatelessWidget {
                                   1, 109, 47, 1)), // Icon for Withdraw Money
                           SizedBox(width: 10), // Space between icon and text
                           Text(
+=======
+                        mainAxisAlignment: MainAxisAlignment.center, // Center the Row
+                        children: [
+                           Icon(Icons.money_off, color: Color.fromRGBO(1, 109, 47, 1)), // Icon for Withdraw Money
+                           SizedBox(width: 10), // Space between icon and text
+                           Text(
+>>>>>>> layout-design
                             'Withdraw Money',
                             style: TextStyle(
                               fontSize: 18,
@@ -138,6 +164,7 @@ class MainMenu extends StatelessWidget {
                       height: 80,
                       width: double.infinity,
                       child: Row(
+<<<<<<< HEAD
                         mainAxisAlignment:
                             MainAxisAlignment.center, // Center the Row
                         children: [
@@ -146,6 +173,13 @@ class MainMenu extends StatelessWidget {
                                   1, 109, 47, 1)), // Icon for Deposit Money
                           SizedBox(width: 10), // Space between icon and text
                           Text(
+=======
+                        mainAxisAlignment: MainAxisAlignment.center, // Center the Row
+                        children: [
+                           Icon(Icons.attach_money, color: Color.fromRGBO(1, 109, 47, 1)), // Icon for Deposit Money
+                           SizedBox(width: 10), // Space between icon and text
+                           Text(
+>>>>>>> layout-design
                             'Deposit Money',
                             style: TextStyle(
                               fontSize: 18,
@@ -171,6 +205,7 @@ class MainMenu extends StatelessWidget {
                       height: 80,
                       width: double.infinity,
                       child: Row(
+<<<<<<< HEAD
                         mainAxisAlignment:
                             MainAxisAlignment.center, // Center the Row
                         children: [
@@ -179,6 +214,13 @@ class MainMenu extends StatelessWidget {
                                   1, 109, 47, 1)), // Icon for Transfer Money
                           SizedBox(width: 10), // Space between icon and text
                           Text(
+=======
+                        mainAxisAlignment: MainAxisAlignment.center, // Center the Row
+                        children: [
+                           Icon(Icons.transfer_within_a_station, color: Color.fromRGBO(1, 109, 47, 1)), // Icon for Transfer Money
+                           SizedBox(width: 10), // Space between icon and text
+                           Text(
+>>>>>>> layout-design
                             'Transfer Money',
                             style: TextStyle(
                               fontSize: 18,
@@ -204,6 +246,7 @@ class MainMenu extends StatelessWidget {
                       height: 80,
                       width: double.infinity,
                       child: Row(
+<<<<<<< HEAD
                         mainAxisAlignment:
                             MainAxisAlignment.center, // Center the Row
                         children: [
@@ -212,6 +255,13 @@ class MainMenu extends StatelessWidget {
                                   1, 109, 47, 1)), // Icon for Pay Bills
                           SizedBox(width: 10), // Space between icon and text
                           Text(
+=======
+                        mainAxisAlignment: MainAxisAlignment.center, // Center the Row
+                        children: [
+                           Icon(Icons.receipt_long, color: Color.fromRGBO(1, 109, 47, 1)), // Icon for Pay Bills
+                           SizedBox(width: 10), // Space between icon and text
+                           Text(
+>>>>>>> layout-design
                             'Pay Bills',
                             style: TextStyle(
                               fontSize: 18,
@@ -232,6 +282,7 @@ class MainMenu extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   color: Colors.white,
                   child: InkWell(
+<<<<<<< HEAD
                     onTap: () {
                       Navigator.pop(context); //Close the menu
                       Navigator.push(
@@ -240,10 +291,14 @@ class MainMenu extends StatelessWidget {
                             builder: (context) => const ChangePIN()),
                       );
                     },
+=======
+                    onTap: () {},
+>>>>>>> layout-design
                     child: const SizedBox(
                       height: 80,
                       width: double.infinity,
                       child: Row(
+<<<<<<< HEAD
                         mainAxisAlignment:
                             MainAxisAlignment.center, // Center the Row
                         children: [
@@ -252,6 +307,13 @@ class MainMenu extends StatelessWidget {
                                   1, 109, 47, 1)), // Icon for Change PIN
                           SizedBox(width: 10), // Space between icon and text
                           Text(
+=======
+                        mainAxisAlignment: MainAxisAlignment.center, // Center the Row
+                        children: [
+                           Icon(Icons.lock, color: Color.fromRGBO(1, 109, 47, 1)), // Icon for Change PIN
+                           SizedBox(width: 10), // Space between icon and text
+                           Text(
+>>>>>>> layout-design
                             'Change PIN',
                             style: TextStyle(
                               fontSize: 18,
@@ -272,6 +334,7 @@ class MainMenu extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   color: Colors.white,
                   child: InkWell(
+<<<<<<< HEAD
                     onTap: () {
                       Navigator.pop(context); // Close the menu screen
                       Navigator.push(
@@ -279,10 +342,14 @@ class MainMenu extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => const MyApp()),
                       );
                     },
+=======
+                    onTap: () {},
+>>>>>>> layout-design
                     child: const SizedBox(
                       height: 80,
                       width: double.infinity,
                       child: Row(
+<<<<<<< HEAD
                         mainAxisAlignment:
                             MainAxisAlignment.center, // Center the Row
                         children: [
@@ -291,6 +358,13 @@ class MainMenu extends StatelessWidget {
                                   1, 109, 47, 1)), // Icon for Exit
                           SizedBox(width: 10), // Space between icon and text
                           Text(
+=======
+                        mainAxisAlignment: MainAxisAlignment.center, // Center the Row
+                        children: [
+                           Icon(Icons.exit_to_app, color: Color.fromRGBO(1, 109, 47, 1)), // Icon for Exit
+                           SizedBox(width: 10), // Space between icon and text
+                           Text(
+>>>>>>> layout-design
                             'Exit',
                             style: TextStyle(
                               fontSize: 18,

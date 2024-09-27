@@ -1,5 +1,7 @@
+import 'package:atm_program_with_gui/check_balance.dart';
 import 'package:flutter/material.dart';
 import 'change_pin.dart';
+import 'check_balance.dart';
 import 'main.dart';
 
 void main() {
@@ -67,7 +69,14 @@ class MainMenu extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   color: Colors.white,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context); // Close the menu screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CheckBalance()),
+                      );
+                    },
                     child: const SizedBox(
                       height: 80,
                       width: double.infinity,
@@ -237,7 +246,7 @@ class MainMenu extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ChangePIN()),
+                          builder: (context) => const ChangePIN()),
                       );
                     },
                     child: const SizedBox(
@@ -276,7 +285,8 @@ class MainMenu extends StatelessWidget {
                       Navigator.pop(context); // Close the menu screen
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const MyApp()),
+                        MaterialPageRoute(
+                          builder: (context) => const MyApp()),
                       );
                     },
                     child: const SizedBox(

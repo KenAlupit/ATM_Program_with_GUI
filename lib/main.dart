@@ -34,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _pinController = TextEditingController();
   String _currentPIN = '1234';
+  int _currentBalance = 10000;
 
   @override
   // Load the PIN upon opening homepage
@@ -47,6 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _currentPIN = (prefs.getString('pin') ?? '1234'); // Default PIN is 1234
+    });
+  }
+
+  _loadBalance() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentBalance = (prefs.getInt('balance') ?? 10000);
     });
   }
 

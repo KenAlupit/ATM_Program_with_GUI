@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'menu.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(const CheckBalance());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CheckBalance extends StatefulWidget {
+  const CheckBalance({super.key});
+  @override
+  State<CheckBalance> createState() => _CheckBalanceState();
+}
+
+class _CheckBalanceState extends State<CheckBalance> {
+  int currentBalance = 10000;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkBalance();
+  }
+
+  _checkBalance() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      currentBalance = prefs.getInt('balance') ?? 10000;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +73,8 @@ class MyApp extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Display the balance
-              const Text(
-                "Your Available Balance is: 1,000,000,000",
+              Text(
+                "Your Current Balance \$${currentBalance.toString()}" ,
                 style: TextStyle(
                   fontSize: 24,
                   color: Color.fromRGBO(32, 32, 32, 1),
@@ -67,12 +89,18 @@ class MyApp extends StatelessWidget {
                   backgroundColor: Colors.white, // White background
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10), // Rounded rectangle shape
-                    side: const BorderSide(color: Colors.black), // Optional: border
+                    // Optional: border
+                    // side: const BorderSide(color: Colors.black), 
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
                 ),
                 onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MainMenu()),
+                  );
                   // Back button logic here
+                  
                 },
                 child: const Text(
                   "Back",

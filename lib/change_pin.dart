@@ -59,6 +59,7 @@ class _ChangePINState extends State<ChangePIN> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
+                Navigator.pop(context); // Close the change pin screen
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const MainMenu()),
@@ -239,6 +240,7 @@ class _ChangePINState extends State<ChangePIN> {
                       const EdgeInsets.symmetric(vertical: 18), // Taller height
                 ),
                 onPressed: () {
+                  Navigator.pop(context); //Close the change pin screen
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const MainMenu()),

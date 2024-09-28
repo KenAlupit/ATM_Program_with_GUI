@@ -74,7 +74,7 @@ class MainMenu extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CheckBalance()),
+                            builder: (context) => const CheckBalance()),
                       );
                     },
                     child: const SizedBox(
@@ -246,7 +246,7 @@ class MainMenu extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ChangePIN()),
+                            builder: (context) => const ChangePIN()),
                       );
                     },
                     child: const SizedBox(
@@ -285,8 +285,7 @@ class MainMenu extends StatelessWidget {
                       Navigator.pop(context); // Close the menu screen
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyApp()),
+                        MaterialPageRoute(builder: (context) => const MyApp()),
                       );
                     },
                     child: const SizedBox(

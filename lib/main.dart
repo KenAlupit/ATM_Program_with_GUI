@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menu.dart';
 
@@ -35,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _pinController = TextEditingController();
   String _currentPIN = '1234';
   int _currentBalance = 10000;
-
+  int _counter = 0;
   @override
   // Load the PIN upon opening homepage
   void initState() {
@@ -67,6 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Incorrect PIN')),
       );
+      _counter++;
+    }
+    if (_counter >= 3) {
+      _showCounterReachedDialog();
     }
   }
 
@@ -88,6 +93,28 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(builder: (context) => const MainMenu()),
                 );
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showCounterReachedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Maximum Number of Tries Reached'),
+          content: const Text('Closing the App!'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.pop(context); // Close the main screen
+                SystemNavigator.pop(); //Only works on device emulator
               },
               child: const Text('OK'),
             ),

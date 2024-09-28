@@ -1,132 +1,291 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'menu.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp (const WithdrawBalance());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class WithdrawBalance extends StatelessWidget {
+  const WithdrawBalance({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        // Background color for the page
-        backgroundColor: const Color.fromRGBO(232, 230, 226, 1),
+      home: WithdrawScreen(),
+    );
+  }
+}
 
-        // AppBar displaying "Withdraw"
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(1, 109, 47, 1), // Green background color
-          foregroundColor: Colors.white,
-          elevation: 4,
-          title: const Text('ATM APPLICATION'), // Retained title
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () {
-              // Open menu logic here
-            },
-            icon: const Icon(Icons.menu),
-          ),
-          actions: [
-            IconButton(
+class WithdrawScreen extends StatefulWidget {
+  const WithdrawScreen({Key? key}) : super(key: key);
+
+  @override
+  _WithdrawScreenState createState() => _WithdrawScreenState();
+}
+
+extension FormatComma on String {
+  String get amountValue {
+    return replaceAll(',', "");
+  }
+}
+
+// Class to format number with commas
+class ThousandsSeparatorInputFormatter extends TextInputFormatter {
+  final formatter = NumberFormat("#,##0"); // Formatter for thousands with commas, no decimals
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return newValue; // If input is empty, return as is
+    }
+
+    // Remove commas to get the raw numeric input
+    final newText = newValue.text.replaceAll(',', '');
+
+    // Try parsing the input as an integer
+    final int? newTextAsNum = int.tryParse(newText);
+
+    if (newTextAsNum == null) {
+      return oldValue; // If input is not a valid number, return the old value
+    }
+
+    // Format the number with commas for thousands
+    final newFormattedText = formatter.format(newTextAsNum);
+
+    return TextEditingValue(
+      text: newFormattedText,
+      selection: TextSelection.collapsed(offset: newFormattedText.length), // Update cursor position
+    );
+  }
+}
+
+  TextSelection updateCursorPosition(String text) {
+    return TextSelection.collapsed(offset: text.length);
+  }
+
+class _WithdrawScreenState extends State<WithdrawScreen> {
+  TextEditingController _amountController = TextEditingController();
+  int _currentBalance = 0; // Current balance fetched from SharedPreferences
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBalance(); // Load current balance from SharedPreferences when the widget is initialized
+  }
+
+  // Load the balance from SharedPreferences
+  Future<void> _loadBalance() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentBalance = prefs.getInt('balance') ?? 10000; // Default balance is 10000 if not found
+    });
+  }
+
+  // Save the updated balance to SharedPreferences
+  Future<void> _saveBalance(int balance) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('balance', balance);
+  }
+
+  // Withdraw funds and update the balance with validation
+    void _withdraw() {
+    int withdrawAmount;
+
+    if (_amountController.text.isEmpty) {
+      _showErrorPopup('Please enter an amount.'); // Error if no input is provided
+      return;
+    }
+
+    // Use the amountValue extension to remove commas and get the raw numeric string
+    String rawAmount = _amountController.text.amountValue;
+
+    try {
+      withdrawAmount = int.parse(rawAmount); // Parse the raw amount (without commas) as an integer
+    } catch (e) {
+      _showErrorPopup('Please enter a valid number.'); // Error for non-numeric input
+      return;
+    }
+
+    if (withdrawAmount <= 0) {
+      _showErrorPopup('Amount must be greater than zero.');
+    } else if (withdrawAmount > _currentBalance) {
+      _showErrorPopup('Insufficient funds. Your balance is $_currentBalance.');
+    } else {
+      // Valid withdrawal
+      setState(() {
+        _currentBalance -= withdrawAmount; // Deduct the amount from the balance
+        _saveBalance(_currentBalance); // Save the updated balance to SharedPreferences
+      });
+      _amountController.clear(); // Clear the input field
+      _showSuccessPopup('Withdrawal successful!'); // Show success popup
+    }
+  }
+
+  // Function to show error popup
+  void _showErrorPopup(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            ElevatedButton(
               onPressed: () {
-                // Open profile logic here
+                Navigator.of(context).pop();
               },
-              icon: const Icon(Icons.person),
+              child: Text('OK'),
             ),
           ],
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25),
-              bottomRight: Radius.circular(25),
+        );
+      },
+    );
+  }
+
+  // Function to show success popup
+  void _showSuccessPopup(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success'),
+          content: Text(message),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
             ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(232, 230, 226, 1), // Background color
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(1, 109, 47, 1), // Green background color
+        foregroundColor: Colors.white,
+        elevation: 4,
+        title: const Text('ATM APPLICATION'),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            // Open menu logic here
+          },
+          icon: const Icon(Icons.menu),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // Open profile logic here
+            },
+            icon: const Icon(Icons.person),
+          ),
+        ],
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25),
+            bottomRight: Radius.circular(25),
           ),
         ),
-
-        // Body section
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Section title "Withdraw" at the top
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Withdraw",
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Color.fromRGBO(32, 32, 32, 1),
-                  ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Section title "Withdraw"
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Withdraw",
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Color.fromRGBO(32, 32, 32, 1),
                 ),
               ),
-              const SizedBox(height: 20), // Space below the title
+            ),
+            const SizedBox(height: 20), // Space below the title
 
-              // Displaying available balance
-              const Text(
-                "Your Available Balance is: 1000000000",
-                style: TextStyle(fontSize: 18, color: Color.fromRGBO(32, 32, 32, 1)),
-              ),
-              const SizedBox(height: 75), // Space below the balance
+            // Displaying available balance
+            Text(
+              "Your Available Balance is: $_currentBalance",
+              style: const TextStyle(fontSize: 18, color: Color.fromRGBO(32, 32, 32, 1)),
+            ),
+            const SizedBox(height: 75), // Space below the balance
 
-              // Input field for withdrawal amount
-              TextFormField(
-                obscureText: false, // Changed to false for amount input
-                decoration: const InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
-                  ),
-                  labelText: 'Enter amount you wish to withdraw',
-                  labelStyle: TextStyle(color: Colors.black),
+            // Input field for withdrawal amount
+            TextFormField(
+              controller: _amountController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly, // Restrict input to digits only
+                ThousandsSeparatorInputFormatter()
+              ],
+              decoration: const InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
                 ),
-                style: const TextStyle(color: Colors.black),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
+                ),
+                labelText: 'Enter amount you wish to withdraw',
+                labelStyle: TextStyle(color: Colors.black),
               ),
-              const SizedBox(height: 50), // Space below the amount input
+              style: const TextStyle(color: Colors.black),
+            ),
+            const SizedBox(height: 50), // Space below the amount input
 
-              // Withdraw button (rounded and styled)
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(1, 109, 47, 1), // Green color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Rounded rectangle shape
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
+            // Withdraw button (rounded and styled)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(1, 109, 47, 1), // Green color
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10), // Rounded rectangle shape
                 ),
-                onPressed: () {
-                  // Withdraw logic here
-                },
-                child: const Text(
-                  "Withdraw",
-                  style: TextStyle(color: Colors.white), // White text
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
               ),
-              const SizedBox(height: 20), // Space between buttons
+              onPressed: _withdraw, // Call the withdraw method when pressed
+              child: const Text(
+                "Withdraw",
+                style: TextStyle(color: Colors.white), // White text
+              ),
+            ),
+            const SizedBox(height: 20), // Space between buttons
 
-              // Back button (rounded and styled)
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 255, 255, 255), // White color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Rounded rectangle shape
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
+            // Back button (rounded and styled)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255), // White color
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10), // Rounded rectangle shape
                 ),
-                onPressed: () {
-                  // Back button logic here
-                },
-                child: const Text(
-                  "Back",
-                  style: TextStyle(color: Colors.black), // Black text
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
               ),
-            ],
-          ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainMenu()),
+                );
+              },
+              child: const Text(
+                "Back",
+                style: TextStyle(color: Colors.black), // Black text
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:atm_program_with_gui/check_balance.dart';
 import 'package:flutter/material.dart';
 import 'change_pin.dart';
-import 'check_balance.dart';
 import 'main.dart';
 
 void main() {

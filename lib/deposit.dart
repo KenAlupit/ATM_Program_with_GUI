@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:atm_program_with_gui/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 import 'menu.dart';
 
 void main() {
@@ -9,6 +10,99 @@ void main() {
 
 class Deposit extends StatelessWidget {
   const Deposit({super.key});
+
+    @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: _DepositScreen(),
+    );
+  }
+}
+
+class _DepositScreen extends StatefulWidget {
+  const _DepositScreen({super.key});
+
+  @override
+  _DepositScreenState createState() => _DepositScreenState();
+}
+
+extension FormatComma on String {
+  String get amountValue {
+    return replaceAll(',', "");
+  }
+}
+
+class _DepositScreenState extends State<_DepositScreen>{
+  final TextEditingController _depositAmountController = TextEditingController();
+  int _currentBalance = 0; 
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBalance(); 
+  }
+
+  // Load the balance from SharedPreferences
+  Future<void> _loadBalance() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentBalance = prefs.getInt('balance') ?? 10000;
+    });
+  }
+
+  // Save the updated balance to SharedPreferences
+  Future<void> _saveBalance(int balance) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('balance', balance);
+  }
+
+  void _depositMoney(){
+    int _depositAmount;
+
+      if (_depositAmountController.text.isEmpty) {
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter an amount.',
+      );// Error if no input is provided
+      return;
+    }
+
+    // Use the amountValue extension to remove commas and get the raw numeric string
+    String rawAmount = _depositAmountController.text.amountValue;
+
+    try {
+      _depositAmount = int.parse(rawAmount); // Parse the raw amount (without commas) as an integer
+    } catch (e) {
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter a valid number.',
+      ); // Error for non-numeric input
+      return;
+    }
+
+    if (_depositAmount <= 0) {
+      showPopup(
+        context: context,
+        title: 'Invalid Amount',
+        message: 'Amount must be greater than zero.',
+      );
+    } else {
+      // Valid withdrawal
+      setState(() {
+        _currentBalance += _depositAmount; // Add amount to current balance
+        _saveBalance(_currentBalance); // Save the updated balance to SharedPreferences
+      });
+      _depositAmountController.clear(); // Clear the input field
+      showPopup(
+        context: context,
+        title: 'Success',
+        message: 'Deposit successful!',
+      ); // Show success popup
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +158,26 @@ class Deposit extends StatelessWidget {
               ),
               const SizedBox(height: 100), // Added space below the title
 
+              // Displaying available balance
+              Text(
+                "Your Available Balance is: $_currentBalance",
+                style: const TextStyle(fontSize: 18, color: Color.fromRGBO(32, 32, 32, 1)),
+              ),
+              const SizedBox(height: 75),
+
               // Deposit input field with white background
               TextFormField(
+                controller: _depositAmountController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly, // Restrict input to digits only
+                  ThousandsSeparatorInputFormatter()
+                ],
                 decoration: const InputDecoration(
                   filled: true, // White background
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
-                  labelText: 'Enter amount',
+                  labelText: 'Enter amount to deposit',
                   labelStyle: TextStyle(color: Colors.black),
                 ),
                 style: const TextStyle(color: Colors.black),
@@ -88,9 +195,7 @@ class Deposit extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
                 ),
-                onPressed: () {
-                  // Deposit logic here
-                },
+                onPressed: _depositMoney, //Call method
                 child: const Text(
                   "Deposit",
                   style: TextStyle(color: Colors.white), // White text
@@ -110,7 +215,10 @@ class Deposit extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 18), // Taller height
                 ),
                 onPressed: () {
-                  // Back button logic here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MainMenu()),
+                );
                 },
                 child: const Text(
                   "Back",

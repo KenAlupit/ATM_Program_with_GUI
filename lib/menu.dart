@@ -1,3 +1,4 @@
+import 'package:atm_program_with_gui/deposit.dart';
 import 'package:atm_program_with_gui/pay_bills.dart';
 import 'package:atm_program_with_gui/transfer.dart';
 import 'package:flutter/material.dart';
@@ -152,7 +153,14 @@ class MainMenu extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   color: Colors.white,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context); // Close the menu screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Deposit()),
+                      );
+                    },
                     child: const SizedBox(
                       height: 80,
                       width: double.infinity,

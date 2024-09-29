@@ -40,8 +40,17 @@ class _MyHomePageState extends State<MyHomePage> {
   // Load the PIN upon opening homepage
   void initState() {
     super.initState();
+    //_clearPin();
     _loadPin();
   }
+
+  // Resets the pin to default
+  // Use it if you changed your pin and can't log in. 
+  // Shared preferences is saving your changed pin and persists even if you restart the app.
+  // _clearPin() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.clear();
+  // }
 
   // Load the PIN
   _loadPin() async {
@@ -65,6 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_counter >= 3) {
       _showCounterReachedDialog();
     }
+  }
+
+  //This will display your current pin
+  dynamic _forgotPin(){
+    return _currentPIN;
   }
 
   // Function for showing success dialog
@@ -197,11 +211,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
               // Forgot PIN button
               TextButton(
-                onPressed: () {
-                  // Add 'Forgot PIN' functionality here
-                },
+                onPressed: _forgotPin, 
                 child: const Text(
                   'Forgot PIN?',
+                  // This will display your current pin
+                  // 'Forgot PIN? $_currentPIN',
                   style: TextStyle(color: Color.fromRGBO(1, 109, 47, 1)),
                 ),
               ),

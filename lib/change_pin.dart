@@ -68,12 +68,12 @@ class MyApp extends StatelessWidget {
                 decoration: const InputDecoration(
                   filled: true, // White background
                   fillColor: Colors.white,
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
+                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
+                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
                   ),
                   labelText: 'Enter Current PIN',
                   labelStyle: TextStyle(color: Colors.black),
@@ -90,12 +90,12 @@ class MyApp extends StatelessWidget {
                 decoration: const InputDecoration(
                   filled: true, // White background
                   fillColor: Colors.white,
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
+                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
+                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
                   ),
                   labelText: 'Enter New PIN',
                   labelStyle: TextStyle(color: Colors.black),

@@ -75,15 +75,15 @@ class MyApp extends StatelessWidget {
                 decoration: const InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
+                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
+                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
                   ),
                   labelText: 'Enter Biller Name',
-                  labelStyle: const TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Colors.black),
                 ),
                 style: const TextStyle(color: Colors.black),
               ),
@@ -95,15 +95,15 @@ class MyApp extends StatelessWidget {
                 decoration: const InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
+                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 2), // Green border when focused
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
+                    borderSide: BorderSide(color: Color.fromRGBO(1, 109, 47, 1), width: 1), // Green border when enabled
                   ),
                   labelText: 'Enter Amount to Pay',
-                  labelStyle: const TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Colors.black),
                 ),
                 style: const TextStyle(color: Colors.black),
               ),

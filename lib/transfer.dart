@@ -1,8 +1,8 @@
+import 'package:atm_program_with_gui/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menu.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 void main() {
   runApp(const TransferBalance());
@@ -29,32 +29,6 @@ class TransferBalanceScreen extends StatefulWidget {
 extension FormatComma on String {
   String get amountValue {
     return replaceAll(',', "");
-  }
-}
-
-class ThousandsSeparatorInputFormatter extends TextInputFormatter {
-  final formatter = NumberFormat("#,##0");
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.isEmpty) {
-      return newValue;
-    }
-
-    final newText = newValue.text.replaceAll(',', '');
-    final int? newTextAsNum = int.tryParse(newText);
-
-    if (newTextAsNum == null) {
-      return oldValue;
-    }
-
-    final newFormattedText = formatter.format(newTextAsNum);
-
-    return TextEditingValue(
-      text: newFormattedText,
-      selection: TextSelection.collapsed(offset: newFormattedText.length),
-    );
   }
 }
 
@@ -86,19 +60,31 @@ class _TransferBalanceScreenState extends State<TransferBalanceScreen> {
 
     // Check if both fields are empty
     if (_receiverController.text.isEmpty && _amountController.text.isEmpty) {
-      _showErrorPopup('Please enter both receiver name and amount to transfer.');
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter both receiver name and amount to transfer.',
+      ); 
       return;
     }
 
     // Validate receiver name
     if (_receiverController.text.isEmpty) {
-      _showErrorPopup("Please enter receiver's name.");
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: "Please enter receiver's name.",
+      ); 
       return;
     }
 
     // Validate amount
     if (_amountController.text.isEmpty) {
-      _showErrorPopup('Please enter an amount to transfer.');
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter an amount to transfer.',
+      ); 
       return;
     }
 
@@ -107,14 +93,26 @@ class _TransferBalanceScreenState extends State<TransferBalanceScreen> {
     try {
       transferAmount = int.parse(rawAmount);
     } catch (e) {
-      _showErrorPopup('Please enter a valid number.');
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter a valid number.',
+      ); 
       return;
     }
 
     if (transferAmount <= 0) {
-      _showErrorPopup('Amount must be greater than zero.');
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Amount must be greater than zero.',
+      ); 
     } else if (transferAmount > _currentBalance) {
-      _showErrorPopup('Insufficient funds. Your balance is $_currentBalance.');
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Insufficient funds. Your balance is $_currentBalance.',
+      ); 
     } else {
       setState(() {
         _currentBalance -= transferAmount;
@@ -122,48 +120,12 @@ class _TransferBalanceScreenState extends State<TransferBalanceScreen> {
       });
       _amountController.clear();
       _receiverController.clear();
-      _showSuccessPopup('Transfer successful!');
+      showPopup(
+        context: context,
+        title: 'Success',
+        message: 'Transfer successful!',
+      ); 
     }
-  }
-
-  void _showErrorPopup(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showSuccessPopup(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Success'),
-          content: Text(message),
-          actions: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override

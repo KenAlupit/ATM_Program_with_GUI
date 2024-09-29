@@ -1,9 +1,9 @@
+import 'package:atm_program_with_gui/pay_bills.dart';
 import 'package:atm_program_with_gui/transfer.dart';
 import 'package:flutter/material.dart';
 import 'change_pin.dart';
 import 'check_balance.dart';
 import 'withdraw.dart';
-import 'transfer.dart';
 import 'main.dart';
 
 
@@ -225,7 +225,14 @@ class MainMenu extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   color: Colors.white,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context); // Close the menu screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PayBills()),
+                      );
+                    },
                     child: const SizedBox(
                       height: 80,
                       width: double.infinity,

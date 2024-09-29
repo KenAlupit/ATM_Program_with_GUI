@@ -1,168 +1,252 @@
+import 'package:atm_program_with_gui/menu.dart';
+import 'package:atm_program_with_gui/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const PayBills());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class PayBills extends StatelessWidget{
+  const PayBills({super.key});
+
+    @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: PayBillsScreen(),
+    );
+  }
+}
+
+class PayBillsScreen extends StatefulWidget {
+  const PayBillsScreen({Key? key}) : super(key: key);
+
+  @override
+  _PayBillsScreenState createState() => _PayBillsScreenState();
+}
+
+extension FormatComma on String {
+  String get amountValue {
+    return replaceAll(',', "");
+  }
+}
+
+class _PayBillsScreenState extends State<PayBillsScreen> {
+  TextEditingController _amountController = TextEditingController();
+  TextEditingController _billerController = TextEditingController();
+  int _currentBalance = 0;
+
+   @override
+  void initState() {
+    super.initState();
+    _loadBalance();
+  }
+
+  Future<void> _loadBalance() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentBalance = prefs.getInt('balance') ?? 10000;
+    });
+  }
+
+  Future<void> _saveBalance(int balance) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('balance', balance);
+  }
+
+  void _payBills(){
+    int billAmount;
+
+        // Check if both fields are empty
+    if (_billerController.text.isEmpty && _amountController.text.isEmpty) {
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter both biller name and amount to pay.',
+      );
+      return;
+    }
+
+    // Validate biller name
+    if (_billerController.text.isEmpty) {
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: "Please enter biller's name.",
+      );
+      return;
+    }
+
+    // Validate amount
+    if (_amountController.text.isEmpty) {
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter an amount to pay.',
+      );
+      return;
+    }
+
+    String rawAmount = _amountController.text.amountValue;
+
+    try {
+      billAmount = int.parse(rawAmount);
+    } catch (e) {
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter a valid number.',
+      );
+      return;
+    }
+
+    if (billAmount <= 0) {
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Amount must be greater than zero.',
+      );
+    } else if (billAmount > _currentBalance) {
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Insufficient funds. Your balance is $_currentBalance.',
+      );
+    } else {
+      setState(() {
+        _currentBalance -= billAmount;
+        _saveBalance(_currentBalance);
+      });
+      _amountController.clear();
+      _billerController.clear();
+      showPopup(
+        context: context,
+        title: 'Success',
+        message: 'Bill Successfully Paid!',
+      ); 
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        // Background color for the page
-        backgroundColor: const Color.fromRGBO(232, 230, 226, 1),
-
-        // AppBar displaying "ATM APPLICATION"
-        appBar: AppBar(
-          backgroundColor:
-              const Color.fromRGBO(1, 109, 47, 1), // Green background color
-          foregroundColor: Colors.white,
-          elevation: 4,
-          title: const Text('ATM APPLICATION'), // Changed title
-          centerTitle: true,
-          leading: IconButton(
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(232, 230, 226, 1),
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(1, 109, 47, 1),
+        foregroundColor: Colors.white,
+        elevation: 4,
+        title: const Text('ATM APPLICATION'),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            // Open menu logic here
+          },
+          icon: const Icon(Icons.menu),
+        ),
+        actions: [
+          IconButton(
             onPressed: () {
-              // Open menu logic here
+              // Open profile logic here
             },
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.person),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                // Open profile logic here
-              },
-              icon: const Icon(Icons.person),
-            ),
-          ],
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25),
-              bottomRight: Radius.circular(25),
-            ),
+        ],
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25),
+            bottomRight: Radius.circular(25),
           ),
         ),
-
-        // Body section
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Section title "Pay Bills" at the top
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Pay Bills",
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Color.fromRGBO(32, 32, 32, 1),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20), // Space below the title
-
-              // Displaying available balance
-              const Text(
-                "Your Available Balance is: 1000000000",
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Transfer",
                 style: TextStyle(
-                    fontSize: 18, color: Color.fromRGBO(32, 32, 32, 1)),
-              ),
-              const SizedBox(height: 75), // Added space below the balance
-
-              // Input field for biller name
-              TextFormField(
-                obscureText: false, // Set to false for biller name input
-                decoration: const InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: const OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                        color: Color.fromRGBO(1, 109, 47, 1),
-                        width: 2), // Green border when focused
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                        color: Color.fromRGBO(1, 109, 47, 1),
-                        width: 1), // Green border when enabled
-                  ),
-                  labelText: 'Enter Biller Name',
-                  labelStyle: const TextStyle(color: Colors.black),
-                ),
-                style: const TextStyle(color: Colors.black),
-              ),
-              const SizedBox(height: 20), // Space below the biller input
-
-              // Input field for payment amount
-              TextFormField(
-                obscureText: false, // Set to false for payment amount input
-                decoration: const InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: const OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                        color: Color.fromRGBO(1, 109, 47, 1),
-                        width: 2), // Green border when focused
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                        color: Color.fromRGBO(1, 109, 47, 1),
-                        width: 1), // Green border when enabled
-                  ),
-                  labelText: 'Enter Amount to Pay',
-                  labelStyle: const TextStyle(color: Colors.black),
-                ),
-                style: const TextStyle(color: Colors.black),
-              ),
-              const SizedBox(height: 50), // Space below the amount input
-
-              // Pay button (rounded and styled)
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      const Color.fromRGBO(1, 109, 47, 1), // Green color
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(10), // Rounded rectangle shape
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 18), // Taller height
-                ),
-                onPressed: () {
-                  // Pay logic here
-                },
-                child: const Text(
-                  "Pay",
-                  style: TextStyle(color: Colors.white), // White text
+                  fontSize: 24,
+                  color: Color.fromRGBO(32, 32, 32, 1),
                 ),
               ),
-              const SizedBox(height: 20), // Space between buttons
-
-              // Back button (rounded and styled)
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      const Color.fromARGB(255, 255, 255, 255), // White color
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(10), // Rounded rectangle shape
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 18), // Taller height
-                ),
-                onPressed: () {
-                  // Back button logic here
-                },
-                child: const Text(
-                  "Back",
-                  style: TextStyle(color: Colors.black), // Black text
-                ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              "Your Available Balance is: $_currentBalance",
+              style: const TextStyle(fontSize: 18, color: Color.fromRGBO(32, 32, 32, 1)),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: _billerController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z\s]")), // Only allow letters and spaces
+              ],
+              decoration: const InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(),
+                labelText: 'Enter biller name',
+                labelStyle: TextStyle(color: Colors.black),
               ),
-            ],
-          ),
+              style: const TextStyle(color: Colors.black),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: _amountController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                ThousandsSeparatorInputFormatter(),
+              ],
+              decoration: const InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(),
+                labelText: 'Enter amount to pay',
+                labelStyle: TextStyle(color: Colors.black),
+              ),
+              style: const TextStyle(color: Colors.black),
+            ),
+            const SizedBox(height: 50),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(1, 109, 47, 1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 18),
+              ),
+              onPressed: _payBills,
+              child: const Text(
+                "Pay Bill",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 18),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainMenu()),
+                );
+              },
+              child: const Text(
+                "Back",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ],
         ),
       ),
     );

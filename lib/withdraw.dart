@@ -1,8 +1,8 @@
+import 'package:atm_program_with_gui/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menu.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 void main() {
   runApp (const WithdrawBalance());
@@ -29,37 +29,6 @@ class WithdrawScreen extends StatefulWidget {
 extension FormatComma on String {
   String get amountValue {
     return replaceAll(',', "");
-  }
-}
-
-// Class to format number with commas
-class ThousandsSeparatorInputFormatter extends TextInputFormatter {
-  final formatter = NumberFormat("#,##0"); // Formatter for thousands with commas, no decimals
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.isEmpty) {
-      return newValue; // If input is empty, return as is
-    }
-
-    // Remove commas to get the raw numeric input
-    final newText = newValue.text.replaceAll(',', '');
-
-    // Try parsing the input as an integer
-    final int? newTextAsNum = int.tryParse(newText);
-
-    if (newTextAsNum == null) {
-      return oldValue; // If input is not a valid number, return the old value
-    }
-
-    // Format the number with commas for thousands
-    final newFormattedText = formatter.format(newTextAsNum);
-
-    return TextEditingValue(
-      text: newFormattedText,
-      selection: TextSelection.collapsed(offset: newFormattedText.length), // Update cursor position
-    );
   }
 }
 
@@ -96,7 +65,11 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
     int withdrawAmount;
 
     if (_amountController.text.isEmpty) {
-      _showErrorPopup('Please enter an amount.'); // Error if no input is provided
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter an amount.',
+      );// Error if no input is provided
       return;
     }
 
@@ -106,14 +79,26 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
     try {
       withdrawAmount = int.parse(rawAmount); // Parse the raw amount (without commas) as an integer
     } catch (e) {
-      _showErrorPopup('Please enter a valid number.'); // Error for non-numeric input
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Please enter a valid number.',
+      ); // Error for non-numeric input
       return;
     }
 
     if (withdrawAmount <= 0) {
-      _showErrorPopup('Amount must be greater than zero.');
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Amount must be greater than zero.',
+      );
     } else if (withdrawAmount > _currentBalance) {
-      _showErrorPopup('Insufficient funds. Your balance is $_currentBalance.');
+      showPopup(
+        context: context,
+        title: 'Error',
+        message: 'Insufficient funds. Your balance is $_currentBalance.',
+      );
     } else {
       // Valid withdrawal
       setState(() {
@@ -121,50 +106,12 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
         _saveBalance(_currentBalance); // Save the updated balance to SharedPreferences
       });
       _amountController.clear(); // Clear the input field
-      _showSuccessPopup('Withdrawal successful!'); // Show success popup
+      showPopup(
+        context: context,
+        title: 'Success',
+        message: 'Withdrawal successful!',
+      ); // Show success popup
     }
-  }
-
-  // Function to show error popup
-  void _showErrorPopup(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  // Function to show success popup
-  void _showSuccessPopup(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Success'),
-          content: Text(message),
-          actions: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override

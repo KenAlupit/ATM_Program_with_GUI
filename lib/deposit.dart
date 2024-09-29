@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:atm_program_with_gui/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'menu.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Deposit());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Deposit extends StatelessWidget {
+  const Deposit({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        // Background color for the page
         backgroundColor: const Color.fromRGBO(232, 230, 226, 1),
 
         // AppBar displaying "ATM APPLICATION"

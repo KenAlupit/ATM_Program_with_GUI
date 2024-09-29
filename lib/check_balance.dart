@@ -14,7 +14,7 @@ class CheckBalance extends StatefulWidget {
 }
 
 class _CheckBalanceState extends State<CheckBalance> {
-  int currentBalance = 10000;
+  int? currentBalance;
 
   @override
   void initState() {

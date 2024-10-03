@@ -8,10 +8,10 @@ void main() {
   runApp(const PayBills());
 }
 
-class PayBills extends StatelessWidget{
+class PayBills extends StatelessWidget {
   const PayBills({super.key});
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: PayBillsScreen(),
@@ -37,7 +37,7 @@ class _PayBillsScreenState extends State<PayBillsScreen> {
   TextEditingController _billerController = TextEditingController();
   int _currentBalance = 0;
 
-   @override
+  @override
   void initState() {
     super.initState();
     _loadBalance();
@@ -55,10 +55,10 @@ class _PayBillsScreenState extends State<PayBillsScreen> {
     await prefs.setInt('balance', balance);
   }
 
-  void _payBills(){
+  void _payBills() {
     int billAmount;
 
-        // Check if both fields are empty
+    // Check if both fields are empty
     if (_billerController.text.isEmpty && _amountController.text.isEmpty) {
       showPopup(
         context: context,
@@ -124,7 +124,7 @@ class _PayBillsScreenState extends State<PayBillsScreen> {
         context: context,
         title: 'Success',
         message: 'Bill Successfully Paid!',
-      ); 
+      );
     }
   }
 
@@ -177,19 +177,53 @@ class _PayBillsScreenState extends State<PayBillsScreen> {
             const SizedBox(height: 20),
             Text(
               "Your Available Balance is: $_currentBalance",
-              style: const TextStyle(fontSize: 18, color: Color.fromRGBO(32, 32, 32, 1)),
+              style: const TextStyle(
+                  fontSize: 18, color: Color.fromRGBO(32, 32, 32, 1)),
             ),
             const SizedBox(height: 20),
             TextFormField(
               controller: _billerController,
               inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z\s]")), // Only allow letters and spaces
+                FilteringTextInputFormatter.allow(
+                    RegExp(r"[a-zA-Z\s]")), // Only allow letters and spaces
               ],
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(),
                 labelText: 'Enter biller name',
+                labelStyle: TextStyle(color: Colors.black),
+              ),
+              style: const TextStyle(color: Colors.black),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: _billerController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r"[a-zA-Z\s]")), // Only allow letters and spaces
+              ],
+              decoration: const InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(),
+                labelText: 'Enter account number',
+                labelStyle: TextStyle(color: Colors.black),
+              ),
+              style: const TextStyle(color: Colors.black),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: _billerController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r"[a-zA-Z\s]")), // Only allow letters and spaces
+              ],
+              decoration: const InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(),
+                labelText: 'Enter mobile number',
                 labelStyle: TextStyle(color: Colors.black),
               ),
               style: const TextStyle(color: Colors.black),

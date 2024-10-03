@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // Resets the pin to default
-  // Use it if you changed your pin and can't log in. 
+  // Use it if you changed your pin and can't log in.
   // Shared preferences is saving your changed pin and persists even if you restart the app.
   // _clearPin() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   //This will display your current pin
-  dynamic _forgotPin(){
+  dynamic _forgotPin() {
     return _currentPIN;
   }
 
@@ -202,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.symmetric(vertical: 18),
                 ),
                 child: const Text(
-                  'Log In',
+                  'Submit',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
@@ -211,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
               // Forgot PIN button
               TextButton(
-                onPressed: _forgotPin, 
+                onPressed: _forgotPin,
                 child: const Text(
                   'Forgot PIN?',
                   // This will display your current pin

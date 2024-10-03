@@ -35,6 +35,8 @@ extension FormatComma on String {
 class _PayBillsScreenState extends State<PayBillsScreen> {
   TextEditingController _amountController = TextEditingController();
   TextEditingController _billerController = TextEditingController();
+  TextEditingController _mobileNumController = TextEditingController();
+  TextEditingController _accountNumController = TextEditingController();
   int _currentBalance = 0;
 
   @override
@@ -57,33 +59,31 @@ class _PayBillsScreenState extends State<PayBillsScreen> {
 
   void _payBills() {
     int billAmount;
+    List<String> missingFields = []; // Container for all missing fields
 
-    // Check if both fields are empty
-    if (_billerController.text.isEmpty && _amountController.text.isEmpty) {
-      showPopup(
-        context: context,
-        title: 'Error',
-        message: 'Please enter both biller name and amount to pay.',
-      );
-      return;
-    }
-
-    // Validate biller name
     if (_billerController.text.isEmpty) {
-      showPopup(
-        context: context,
-        title: 'Error',
-        message: "Please enter biller's name.",
-      );
-      return;
+      missingFields.add("biller's name");
     }
 
-    // Validate amount
     if (_amountController.text.isEmpty) {
+      missingFields.add("amount");
+    }
+
+    if (_accountNumController.text.isEmpty) {
+      missingFields.add("account number");
+    }
+
+    if (_mobileNumController.text.isEmpty) {
+      missingFields.add("mobile number");
+    }
+
+    // Enters if there is at least one missing field
+    if (missingFields.isNotEmpty) {
+      String errorMessage = "Please enter: ${missingFields.join(", ")}";
       showPopup(
         context: context,
         title: 'Error',
-        message: 'Please enter an amount to pay.',
+        message: errorMessage,
       );
       return;
     }
@@ -198,7 +198,7 @@ class _PayBillsScreenState extends State<PayBillsScreen> {
             ),
             const SizedBox(height: 20),
             TextFormField(
-              controller: _billerController,
+              controller: _accountNumController,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
                     RegExp(r"[a-zA-Z\s]")), // Only allow letters and spaces
@@ -214,7 +214,7 @@ class _PayBillsScreenState extends State<PayBillsScreen> {
             ),
             const SizedBox(height: 20),
             TextFormField(
-              controller: _billerController,
+              controller: _mobileNumController,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
                     RegExp(r"[a-zA-Z\s]")), // Only allow letters and spaces
